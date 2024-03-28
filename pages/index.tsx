@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <div className="text-sky-500 text-3xl">Hello world</div>
+    <Header showBackArrow={true} label={"Home"} />
   );
 }
