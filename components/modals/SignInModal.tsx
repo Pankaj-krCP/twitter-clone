@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 
-import useSignInModal from "@/hooks/useSignInModal";
-import useSignUpModal from "@/hooks/useSignUpModal";
+import signInModalState from "@/store/signInModalState";
+import signUpModalState from "@/store/signUpModalState";
 
 import CustomInput from "../CustomInput";
 import Modal from "../Modal";
 
 const SignInModal = () => {
-  const signInModal = useSignInModal();
-  const signUpModal = useSignUpModal();
+  const signInModal = signInModalState();
+  const signUpModal = signUpModalState();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useRouter } from "next/router";
 import { FaFeather } from "react-icons/fa";
+import signInModalState from "@/store/signInModalState";
 
 const SidebarTweetButton = () => {
   const router = useRouter();
+  const signInModal = signInModalState();
+
+  const onClick = useCallback(() => {
+    signInModal.open();
+  }, [signInModal]);
+
   return (
-    <div onClick={() => {}}>
+    <div onClick={onClick}>
       <div
         className="
         mt-6
