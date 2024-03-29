@@ -3,8 +3,8 @@ import React, { useCallback, useState } from "react";
 import signInModalState from "@/store/signInModalState";
 import signUpModalState from "@/store/signUpModalState";
 
-import CustomInput from "../CustomInput";
-import Modal from "../Modal";
+import CustomInput from "../common/CustomInput";
+import Modal from "../common/Modal";
 
 const SignUpModal = () => {
   const signInModal = signInModalState();
