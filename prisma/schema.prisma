@@ -18,11 +18,11 @@ model User {
   name            String?
   username        String?   @unique
   bio             String?
-  email           String?   @unique
+  email           String   @unique
   emailVerified   DateTime?
   image           String?
   profileImage    String?
-  hashedPassword  String?
+  hashedPassword  String
   createdAt       DateTime  @default(now())
   followingIds    String[]  @db.ObjectId
   hasNotification Boolean?
