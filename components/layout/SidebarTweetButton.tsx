@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useRouter } from "next/router";
 import { FaFeather } from "react-icons/fa";
-import signInModalState from "@/store/signInModalState";
+import signInModalState from "@/store/user/signInModalState";
 
 const SidebarTweetButton = () => {
   const router = useRouter();

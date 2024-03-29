@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from "react";
 
-import signInModalState from "@/store/signInModalState";
-import signUpModalState from "@/store/signUpModalState";
+import signInModalState from "@/store/user/signInModalState";
+import signUpModalState from "@/store/user/signUpModalState";
 
 import CustomInput from "../common/CustomInput";
 import Modal from "../common/Modal";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const SignInModal = () => {
   const signInModal = signInModalState();
@@ -25,14 +27,18 @@ const SignInModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      //Sign In Logic
+      await signIn("credentials", {
+        email,
+        password,
+      });
+      toast.success("Logged in");
       signInModal.close();
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [signInModal]);
+  }, [signInModal, email, password]);
 
   const bodyContent = (
     <div className="flex flex-col gap-2">
