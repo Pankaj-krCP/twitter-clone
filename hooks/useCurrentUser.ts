@@ -2,15 +2,16 @@ import useSWR from "swr";
 import fetcher from "@/libs/fetcher";
 
 const useCurrentUser = () => {
-  // const { data, error, isLoading, mutate } = useSWR(
-  //   "/api/user/currentuser",
-  //   fetcher
-  // );
-
-  const data = "Pankaj";
+  const { data, error, isLoading, mutate } = useSWR(
+    "/api/user/currentuser",
+    fetcher
+  );
 
   return {
     data,
+    error,
+    isLoading,
+    mutate,
   };
 };
 
