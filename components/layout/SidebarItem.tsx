@@ -24,7 +24,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer">
         <Icon color="white"></Icon>
       </div>
-      <div className="text-white">{label}</div>
+      <div className="text-white hidden sm:block">{label}</div>
     </div>
   );
 };

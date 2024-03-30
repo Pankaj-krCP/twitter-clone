@@ -16,7 +16,7 @@ const SidebarTweetButton = () => {
       <div
         className="
         mt-6
-        lg:hidden 
+        sm:hidden 
         rounded-full 
         h-14
         w-14
@@ -36,7 +36,7 @@ const SidebarTweetButton = () => {
         className="
         mt-6
         hidden 
-        lg:block 
+        sm:block 
         px-4
         py-2
         rounded-full
@@ -47,8 +47,6 @@ const SidebarTweetButton = () => {
       >
         <p
           className="
-            hidden 
-            lg:block 
             text-center
             font-semibold
             text-white 
