@@ -25,6 +25,7 @@ model User {
   hashedPassword  String
   createdAt       DateTime  @default(now())
   followingIds    String[]  @db.ObjectId
+  followersIds    String[]  @db.ObjectId
   hasNotification Boolean?
 
   posts         Post[]
