@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
-import { CgProfile } from "react-icons/cg";
+import { HiUserCircle } from "react-icons/hi";
 import useUser from "@/hooks/useUser";
 
 interface AvatarProps {
@@ -18,8 +18,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder }) => {
   const onClick = useCallback(
     (event: any) => {
       event.stopPropagation();
-      const url = `/api/user/singleuser/${userId}`;
-      console.log(url);
+      const url = `/user/${userId}`;
       router.push(url);
     },
     [router, userId]
@@ -29,7 +28,7 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder }) => {
     <div
       onClick={onClick}
       className={`
-        ${hasBorder ? "border-4 border-black" : ""}
+        ${hasBorder ? "border-4 border-white" : ""}
         ${isLarge ? "h-32" : "h-12"}
         ${isLarge ? "w-32" : "w-12"}
         rounded-full 
@@ -50,7 +49,13 @@ const Avatar: React.FC<AvatarProps> = ({ userId, isLarge, hasBorder }) => {
           src={fetchedUser?.profileImage}
         />
       ) : (
-        <CgProfile color="white" size={44} />
+        <HiUserCircle
+          color="white"
+          className={`
+          ${isLarge ? "h-32" : "h-12"}
+          ${isLarge ? "w-32" : "w-12"}`}
+          onClick={onClick}
+        />
       )}
     </div>
   );
