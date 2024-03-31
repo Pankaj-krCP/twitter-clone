@@ -8,6 +8,7 @@ export default async function singleUser(userId: string) {
       username: true,
       bio: true,
       image: true,
+      coverImage: true,
       profileImage: true,
       createdAt: true,
       followingIds: true,
