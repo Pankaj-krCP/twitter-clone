@@ -3,9 +3,22 @@
 @tailwind utilities;
 
 :root {
-  @apply h-full bg-black
+  @apply h-full bg-black;
 }
 
-body{
-  @apply h-full bg-black
+body {
+  @apply h-full bg-black;
+}
+
+#root {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.253);
 }
