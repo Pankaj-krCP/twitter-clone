@@ -136,7 +136,7 @@ const EditModal = () => {
           onSubmit={onSubmit}
           title={"Update Profile"}
           body={bodyContent}
-          footer={<div>Hi</div>}
+          // footer={<div>Hi</div>}
           actionLabel={"Save"}
           disabled={isLoading}
         />

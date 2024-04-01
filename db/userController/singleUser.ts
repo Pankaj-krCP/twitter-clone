@@ -12,6 +12,7 @@ export default async function singleUser(userId: string) {
       profileImage: true,
       createdAt: true,
       followingIds: true,
+      followersIds: true,
       posts: true,
     },
     where: {
@@ -23,19 +24,5 @@ export default async function singleUser(userId: string) {
     throw new Error("User Not Found");
   }
 
-  const followers = await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      username: true,
-      profileImage: true,
-    },
-    where: {
-      followingIds: {
-        has: userId,
-      },
-    },
-  });
-
-  return { ...user, followers };
+  return user;
 }
