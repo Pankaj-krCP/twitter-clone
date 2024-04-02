@@ -3,7 +3,7 @@ import useSWR from "swr";
 
 const useAllPost = () => {
   const { data, error, isLoading, mutate } = useSWR(
-    "/api/post/getall",
+    "/api/post/getall/",
     fetcher
   );
 

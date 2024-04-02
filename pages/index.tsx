@@ -1,11 +1,13 @@
-import Form from "@/components/common/Form";
-import Header from "@/components/common/Header";
+import HomeHeader from "@/components/home/HomeHeader";
+import HomePostFeed from "@/components/home/HomePostFeed";
+import PostCreate from "@/components/home/PostCreate";
 
 export default function Home() {
   return (
     <>
-      <Header showBackArrow={true} label={"Home"} />
-      <Form placeholder={"What is happening..."} />
+      <HomeHeader />
+      <PostCreate />
+      <HomePostFeed />
     </>
   );
 }

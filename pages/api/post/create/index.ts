@@ -13,7 +13,6 @@ export default async function handler(
     const post = await createPost(userId, body);
     return res.status(200).json(post);
   } catch (error) {
-    console.log(error);
     return res.status(500).end();
   }
 }

@@ -143,7 +143,7 @@ const EditModal = () => {
       </div>
     );
   }
-  return <div>EditModal</div>;
+  return <div></div>;
 };
 
 export default EditModal;
