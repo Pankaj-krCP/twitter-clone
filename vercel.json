@@ -1,0 +1,5 @@
+{
+  "build": {
+    "postbuild": "prisma generate"
+  }
+}
