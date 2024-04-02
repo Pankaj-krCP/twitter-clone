@@ -1,15 +1,23 @@
 import React, { useCallback } from "react";
-import { useRouter } from "next/router";
 import { FaFeather } from "react-icons/fa";
 import signInModalState from "@/store/user/signInModalState";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const SidebarTweetButton = () => {
-  const router = useRouter();
   const signInModal = signInModalState();
+  const { data: currentUser } = useCurrentUser();
 
   const onClick = useCallback(() => {
-    signInModal.open();
-  }, [signInModal]);
+    if (currentUser) {
+      const element = document.getElementById("whatishappening");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        element.focus();
+      }
+    } else {
+      signInModal.open();
+    }
+  }, [currentUser, signInModal]);
 
   return (
     <div onClick={onClick}>

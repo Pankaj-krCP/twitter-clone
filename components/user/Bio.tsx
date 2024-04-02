@@ -55,8 +55,6 @@ const Bio: React.FC<BioProps> = ({ userId }) => {
     mutateFetchedUser,
   ]);
 
-  console.log(fetchedUser);
-
   return (
     <div className="border-b-[1px] border-neutral-800 pb-4">
       <div className="flex justify-end p-2">

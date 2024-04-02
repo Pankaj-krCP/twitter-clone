@@ -22,12 +22,18 @@ const FollowBar = () => {
           {users.map((user: Record<string, any>) => (
             <div
               key={user.id}
-              className="bg-neutral-900 lg:bg-transparent flex flex-col lg:flex-row gap-4 p-3 py-1 lg:p-0 items-center justify-center lg:justify-start rounded-md"
+              className="bg-neutral-900 lg:bg-transparent flex flex-col lg:flex-row gap-4 p-4 lg:p-0 items-center justify-center lg:justify-start rounded-md"
             >
               <Avatar userId={user.id} />
               <div className="flex flex-col items-center lg:items-start">
-                <p className="text-white font-semibold text-sm">{user.name}</p>
-                <p className="text-neutral-400 text-sm">@{user.username}</p>
+                <p className="text-white font-semibold text-sm">
+                  {user.name.slice(0, 8)}
+                  {user.name.length > 8 && "..."}
+                </p>
+                <p className="text-neutral-400 text-sm">
+                  @{user.username.slice(0, 8)}
+                  {user.username.length > 8 && "..."}
+                </p>
               </div>
             </div>
           ))}

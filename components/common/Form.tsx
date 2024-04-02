@@ -47,7 +47,6 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
         mutateSinglePost();
       }
     } catch (error) {
-      console.log(error);
       toast.error("Something Went Wrong!");
     } finally {
       setisLoading(false);
@@ -71,6 +70,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
           </div>
           <div className="w-full">
             <textarea
+              id="whatishappening"
               disabled={isLoading}
               onChange={(event) => setBody(event.target.value)}
               value={body}

@@ -30,7 +30,6 @@ const Feed: React.FC<FeedProps> = ({
   const { mutate: mutatePost } = useAllPost();
 
   const handleDelete = useCallback(async () => {
-    console.log(postId);
     if (postId) {
       await axios.delete("/api/post/delete", { data: { postId } });
       setOpenOption(false);
