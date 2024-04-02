@@ -47,7 +47,13 @@ const Bio: React.FC<BioProps> = ({ userId }) => {
     } catch (error) {
       toast.error("Something Went Wrong!");
     }
-  }, [currentUser, fetchedUser, mutateCurrentUser, mutateFetchedUser]);
+  }, [
+    signInModal,
+    currentUser,
+    fetchedUser,
+    mutateCurrentUser,
+    mutateFetchedUser,
+  ]);
 
   console.log(fetchedUser);
 
