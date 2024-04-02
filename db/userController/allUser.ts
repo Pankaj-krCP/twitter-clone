@@ -1,7 +1,7 @@
 import prisma from "@/db/connect";
 
 export default async function allUser() {
-  const allUser = prisma.user.findMany({
+  const allUser = await prisma.user.findMany({
     select: {
       id: true,
       name: true,

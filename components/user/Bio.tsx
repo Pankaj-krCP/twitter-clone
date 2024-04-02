@@ -7,6 +7,7 @@ import Button from "../common/Button";
 import { BiCalendar } from "react-icons/bi";
 import editModalState from "@/store/user/editModalStae";
 import toast from "react-hot-toast";
+import signInModalState from "@/store/user/signInModalState";
 
 interface BioProps {
   userId: string;
@@ -17,6 +18,7 @@ const Bio: React.FC<BioProps> = ({ userId }) => {
   const { data: fetchedUser, mutate: mutateFetchedUser } = useUser(userId);
 
   const editModal = editModalState();
+  const signInModal = signInModalState();
 
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
@@ -27,17 +29,21 @@ const Bio: React.FC<BioProps> = ({ userId }) => {
 
   const followHandle = useCallback(async () => {
     try {
-      await axios.patch("/api/user/follow", {
-        followerId: currentUser?.id,
-        followingId: fetchedUser?.id,
-      });
-      if (fetchedUser?.followersIds?.includes(currentUser?.id)) {
-        toast.success("Followers Removed!");
+      if (!currentUser) {
+        signInModal.open();
       } else {
-        toast.success("Followers Added!");
+        await axios.patch("/api/user/follow", {
+          followerId: currentUser?.id,
+          followingId: fetchedUser?.id,
+        });
+        if (fetchedUser?.followersIds?.includes(currentUser?.id)) {
+          toast.success("Followers Removed!");
+        } else {
+          toast.success("Followers Added!");
+        }
+        mutateCurrentUser();
+        mutateFetchedUser();
       }
-      mutateCurrentUser();
-      mutateFetchedUser();
     } catch (error) {
       toast.error("Something Went Wrong!");
     }

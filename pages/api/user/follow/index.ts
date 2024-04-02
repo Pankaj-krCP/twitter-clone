@@ -1,7 +1,8 @@
 import followUser from "@/db/userController/followUser";
+import serverAuth from "@/db/userController/serverAuth";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function hander(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
