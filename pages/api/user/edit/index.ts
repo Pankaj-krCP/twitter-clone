@@ -1,4 +1,5 @@
 import updateUser from "@/db/userController/updateUser";
+import serverAuth from "@/libs/serverAuth";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -9,7 +10,11 @@ export default async function handler(
     return res.status(405).end();
   }
   try {
+    const { currentUser } = await serverAuth(req, res);
     const { id, name, username, bio, profileImage, coverImage } = req.body;
+    if (currentUser?.id !== id) {
+      throw new Error("Not Authenticated");
+    }
     if (!name || !username) {
       throw new Error("Name and Username is Needed");
     }

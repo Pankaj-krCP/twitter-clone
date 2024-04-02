@@ -1,4 +1,4 @@
-import prisma from "@/db/connect";
+import prisma from "@/libs/connect";
 
 const followUser = async (followerId: string, followingId: string) => {
   const alreadyFollowed = await prisma.user.findUnique({
@@ -25,11 +25,11 @@ const followUser = async (followerId: string, followingId: string) => {
     });
 
     const secondUser = await prisma.user.findUnique({
-      where: {
-        id: followingId,
-      },
       select: {
         followersIds: true,
+      },
+      where: {
+        id: followingId,
       },
     });
 

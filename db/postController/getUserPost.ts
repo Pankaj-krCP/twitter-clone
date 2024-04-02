@@ -1,4 +1,4 @@
-import prisma from "@/db/connect";
+import prisma from "@/libs/connect";
 
 const getUserPost = async (userId: string) => {
   const post = await prisma?.post.findMany({

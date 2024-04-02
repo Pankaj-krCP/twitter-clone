@@ -1,4 +1,4 @@
-import prisma from "@/db/connect";
+import prisma from "@/libs/connect";
 
 const createPost = async (userId: string, body: string) => {
   const post = await prisma.post.create({
@@ -7,8 +7,6 @@ const createPost = async (userId: string, body: string) => {
       userId,
     },
   });
-
-  console.log(post);
   return post;
 };
 

@@ -11,7 +11,7 @@ const HomePostFeed = () => {
           <Feed
             key={index}
             userId={item?.userId}
-            postId={item?.postId}
+            postId={item?.id}
             createdAt={item?.createdAt}
             body={item?.body}
           />

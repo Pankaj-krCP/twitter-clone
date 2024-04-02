@@ -1,11 +1,11 @@
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth/next";
+import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "@/libs/connect";
 
-import prisma from "@/db/connect";
-
-export default NextAuth({
+export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -15,38 +15,34 @@ export default NextAuth({
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        try {
-          if (!credentials?.email) {
-            throw new Error("Email Not Provided");
-          }
-
-          if (!credentials?.password) {
-            throw new Error("Password Not provided");
-          }
-
-          const user = await prisma.user.findUnique({
-            where: {
-              email: credentials.email,
-            },
-          });
-
-          if (!user) {
-            throw new Error("User Not found");
-          }
-
-          const isCorrectPassword = await bcrypt.compare(
-            credentials.password,
-            user.hashedPassword
-          );
-
-          if (!isCorrectPassword) {
-            throw new Error("Wrong Password");
-          }
-
-          return user;
-        } catch (e: any) {
-          return null;
+        if (!credentials?.email) {
+          throw new Error("Email Not Provided");
         }
+
+        if (!credentials?.password) {
+          throw new Error("Password Not provided");
+        }
+
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+
+        if (!user) {
+          throw new Error("User Not found");
+        }
+
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password,
+          user.hashedPassword
+        );
+
+        if (!isCorrectPassword) {
+          throw new Error("Wrong Password");
+        }
+
+        return user;
       },
     }),
   ],
@@ -58,4 +54,6 @@ export default NextAuth({
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+export default NextAuth(authOptions);

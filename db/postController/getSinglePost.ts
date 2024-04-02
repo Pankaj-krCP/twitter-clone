@@ -1,4 +1,4 @@
-import prisma from "@/db/connect";
+import prisma from "@/libs/connect";
 
 const getSinglePost = async (postId: string) => {
   const post = await prisma?.post.findUnique({

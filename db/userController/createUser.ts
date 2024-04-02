@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import prisma from "@/db/connect";
+import prisma from "@/libs/connect";
 
 interface createUserParams {
   email: string;
