@@ -8,13 +8,17 @@ import Avatar from "./Avatar";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useAllPost from "@/hooks/useAllPost";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
+import useSinglePost from "@/hooks/useSinglePost";
 
 interface FeedProps {
-  userId?: string;
-  postId?: string;
+  userId: string;
+  postId: string;
   commentId?: string;
   createdAt: string;
   body?: string;
+  commentLength?: number;
+  likeIds?: string[];
 }
 
 const Feed: React.FC<FeedProps> = ({
@@ -23,22 +27,58 @@ const Feed: React.FC<FeedProps> = ({
   commentId,
   createdAt,
   body,
+  commentLength,
+  likeIds,
 }) => {
+  const router = useRouter();
   const [openOption, setOpenOption] = useState(false);
+  const [alreadyLiked, setAlreadyLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likeIds?.length);
   const { data: fetchedUser } = useUser(userId as string);
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutatePost } = useAllPost();
+  const { mutate: mutateSinglePost } = useSinglePost(postId as string);
 
   const handleDelete = useCallback(async () => {
-    if (postId) {
+    if (commentId) {
+      await axios.delete("/api/comment/delete", { data: { commentId } });
+      setOpenOption(false);
+      mutateSinglePost();
+      toast.success("Comment Deleted");
+    } else {
       await axios.delete("/api/post/delete", { data: { postId } });
       setOpenOption(false);
       mutatePost();
       toast.success("Tweet Deleted");
-    } else {
-      //comment delete logic
     }
-  }, [postId, mutatePost]);
+  }, [postId, commentId, mutatePost, mutateSinglePost]);
+
+  const handleLike = useCallback(async () => {
+    try {
+      if (!commentId) {
+        await axios.patch("/api/post/like", { postId, userId: fetchedUser.id });
+        if (likeCount) {
+          if (alreadyLiked) {
+            setLikeCount(likeCount - 1);
+            toast.success("Like Removed!");
+          } else {
+            setLikeCount(likeCount + 1);
+            toast.success("Like Added!");
+          }
+        } else {
+          setLikeCount(1);
+          toast.success("Like Added!");
+        }
+        setAlreadyLiked(!alreadyLiked);
+      }
+    } catch (error) {
+      toast.error("Something Went Wrong!");
+    }
+  }, [commentId, fetchedUser, postId, likeCount, alreadyLiked]);
+
+  const openFeed = () => {
+    router.push(`/post/${postId}`);
+  };
 
   const time = useMemo(() => {
     if (!createdAt) {
@@ -46,8 +86,19 @@ const Feed: React.FC<FeedProps> = ({
     }
     return formatDistanceToNowStrict(new Date(createdAt));
   }, [createdAt]);
+
+  useMemo(() => {
+    if (likeIds?.includes(fetchedUser?.id)) {
+      setAlreadyLiked(true);
+    }
+  }, [likeIds, fetchedUser]);
+
   return (
-    <div className="border-b-[1px] border-neutral-700 mb-2">
+    <div
+      className={`${
+        commentId ? "pl-4 mt-2" : "mb-2"
+      } border-b-[1px] border-neutral-700`}
+    >
       <div className="flex gap-4 p-4 pt-1">
         <div>
           <Avatar userId={userId as string} />
@@ -61,7 +112,7 @@ const Feed: React.FC<FeedProps> = ({
             </div>
 
             {currentUser?.id === userId && (
-              <div className="flex relative">
+              <div className="flex relative mr-5">
                 <div
                   className="cursor-pointer"
                   onClick={() => {
@@ -71,13 +122,13 @@ const Feed: React.FC<FeedProps> = ({
                   <SlOptionsVertical color="white" size={12} />
                 </div>
                 {openOption && (
-                  <div className="absolute px-2 rounded-md right-5 -top-1 bg-neutral-800">
+                  <div className="absolute rounded-md right-5 -top-1 bg-neutral-800 ">
                     <ul>
-                      <li className="text-white cursor-pointer border-b-[1px] p-2">
+                      {/* <li className="text-white cursor-pointer border-b-[1px] p-2 px-4 hover:bg-neutral-600 rounded">
                         Edit
-                      </li>
+                      </li> */}
                       <li
-                        className="text-white cursor-pointer p-2"
+                        className="text-white cursor-pointer p-2 px-4 hover:bg-neutral-600 rounded"
                         onClick={handleDelete}
                       >
                         Delete
@@ -89,12 +140,39 @@ const Feed: React.FC<FeedProps> = ({
             )}
           </div>
 
-          <div className="text-white py-4">
+          <div
+            className={`${
+              commentId ? "pb-0 pt-4" : "py-4"
+            } text-white cursor-pointer`}
+            onClick={openFeed}
+          >
             <p>{body}</p>
           </div>
-          <div className="flex items-center justify-between">
-            <AiOutlineMessage className="text-neutral-500" />
-            <AiOutlineHeart className="text-neutral-500" />
+          <div className={`${commentId && "hidden"} flex items-center gap-40`}>
+            <div className="flex items-center gap-2">
+              <AiOutlineMessage
+                onClick={openFeed}
+                className="text-neutral-500 cursor-pointer"
+                size={20}
+              />
+              <p className="text-neutral-500">{commentLength}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              {alreadyLiked ? (
+                <AiFillHeart
+                  onClick={handleLike}
+                  className="cursor-pointer text-red-500"
+                  size={20}
+                />
+              ) : (
+                <AiOutlineHeart
+                  onClick={handleLike}
+                  className="text-neutral-500 cursor-pointer hover:text-red-500"
+                  size={20}
+                />
+              )}
+              <p className="text-neutral-500">{likeCount}</p>
+            </div>
           </div>
         </div>
       </div>

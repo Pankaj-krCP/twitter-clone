@@ -14,6 +14,8 @@ const HomePostFeed = () => {
             postId={item?.id}
             createdAt={item?.createdAt}
             body={item?.body}
+            commentLength={item?.comments?.length}
+            likeIds={item?.likeIds}
           />
         );
       })}

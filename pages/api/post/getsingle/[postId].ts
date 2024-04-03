@@ -11,6 +11,9 @@ export default async function handler(
   }
   try {
     const { postId } = req.query;
+    if (!postId || typeof postId !== "string") {
+      throw new Error("Invalid ID");
+    }
     const post = await getSinglePost(postId as string);
     return res.status(200).json(post);
   } catch (error) {

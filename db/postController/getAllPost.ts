@@ -5,6 +5,9 @@ const getAllPost = async () => {
     orderBy: {
       createdAt: "desc",
     },
+    include: {
+      comments: true,
+    },
   });
   return posts;
 };

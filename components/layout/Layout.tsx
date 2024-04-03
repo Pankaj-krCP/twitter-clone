@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const router = useRouter();
-  const { userId } = router.query;
+  const isHome = Object.keys(router.query).length === 0;
   return (
     <div className="h-screen bg-black">
       <div className="container h-full mx-auto xl:px-30 max-w-6xl">
@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div
             className={`col-span-3 lg:col-span-1 border-l-[1px] border-neutral-800`}
           >
-            <div className={`${userId && "hidden"} lg:block`}>
+            <div className={`${!isHome && "hidden"} lg:block`}>
               <Followbar />
             </div>
             <div className="lg:hidden">{children}</div>

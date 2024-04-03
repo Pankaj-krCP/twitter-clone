@@ -5,6 +5,17 @@ const getSinglePost = async (postId: string) => {
     where: {
       id: postId,
     },
+    include: {
+      user: true,
+      comments: {
+        include: {
+          user: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
   });
   return post;
 };

@@ -3,11 +3,11 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import useAllPost from "@/hooks/useAllPost";
 import useCurrentUser from "@/hooks/useCurrentUser";
-// import useSinglePost from "@/hooks/useSinglePost";
 import signInModalState from "@/store/user/signInModalState";
 import signUpModalState from "@/store/user/signUpModalState";
 import Button from "./Button";
 import Avatar from "./Avatar";
+import useSinglePost from "@/hooks/useSinglePost";
 
 interface FormProps {
   placeholder: string;
@@ -20,7 +20,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const signInState = signInModalState();
 
   const { data: currentUser } = useCurrentUser();
-  // const { mutate: mutateSinglePost } = useSinglePost();
+  const { mutate: mutateSinglePost } = useSinglePost(postId as string);
   const { mutate: mutatePosts } = useAllPost();
 
   const [body, setBody] = useState("");
@@ -37,13 +37,13 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
         mutatePosts();
       } else {
         await axios.post("/api/comment/create", {
-          body,
           userId: currentUser?.id,
           postId,
+          body,
         });
         toast.success("Comment Added!");
         setBody("");
-        // mutateSinglePost();
+        mutateSinglePost();
       }
     } catch (error) {
       toast.error("Something Went Wrong!");
@@ -57,27 +57,30 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
     isComment,
     setisLoading,
     mutatePosts,
-    // mutateSinglePost,
+    mutateSinglePost,
   ]);
 
   return (
-    <div className="border-b-[1px] border-neutral-800 px-5 py-2">
+    <div
+      className={`${
+        isComment && "pl-8"
+      } border-b-[1px] border-neutral-800 px-5 py-2`}
+    >
       {currentUser ? (
-        <div className="flex flex-row gap-4">
+        <div className={`flex flex-row gap-4`}>
           <div>
             <Avatar userId={currentUser?.id} />
           </div>
-          <div className="w-full">
+          <div className={`${isComment && "flex items-center"} w-full`}>
             <textarea
               id="whatishappening"
               disabled={isLoading}
               onChange={(event) => setBody(event.target.value)}
               value={body}
-              className="
+              className={`${isComment ? "mt-2" : "mt-3"}
                 disabled:opacity-80
                 peer
                 resize-none 
-                mt-3 
                 w-full 
                 bg-black 
                 ring-0 
@@ -85,19 +88,23 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                 text-[20px] 
                 placeholder-neutral-500 
                 text-white
-              "
+              `}
               placeholder={placeholder}
             ></textarea>
             <hr
-              className="
-                opacity-0 
+              className={`
+              ${isComment && "hidden"} opacity-0 
                 peer-focus:opacity-100 
                 h-[1px] 
                 w-full 
                 border-neutral-800 
-                transition"
+                transition`}
             />
-            <div className="mt-4 flex flex-row justify-end">
+            <div
+              className={`${
+                isComment ? "-mt-4" : "mt-4"
+              } flex flex-row justify-end`}
+            >
               <Button
                 disabled={isLoading || !body}
                 onClick={onSubmit}
