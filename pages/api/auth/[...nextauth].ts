@@ -46,6 +46,9 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  pages: {
+    error: "/auth/error",
+  },
   debug: process.env.NODE_ENV === "development",
   callbacks: {
     jwt: async ({ user, token }: any) => {
