@@ -1,18 +1,10 @@
-import useSWR from "swr";
-import fetcher from "@/libs/fetcher";
+import { useSession } from "next-auth/react";
 
 const useCurrentUser = () => {
-  const { data, error, isLoading, mutate } = useSWR(
-    "/api/user/currentuser",
-    fetcher
-  );
-
-  return {
-    data,
-    error,
-    isLoading,
-    mutate,
-  };
+  const session = useSession();
+  const user = session.data?.user;
+  const data = user ? JSON.parse(JSON.stringify(user)) : null;
+  return { data };
 };
 
 export default useCurrentUser;

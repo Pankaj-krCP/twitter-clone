@@ -3,12 +3,11 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import useAllPost from "@/hooks/useAllPost";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useSinglePost from "@/hooks/useSinglePost";
+// import useSinglePost from "@/hooks/useSinglePost";
 import signInModalState from "@/store/user/signInModalState";
 import signUpModalState from "@/store/user/signUpModalState";
 import Button from "./Button";
 import Avatar from "./Avatar";
-import { FaFeather } from "react-icons/fa";
 
 interface FormProps {
   placeholder: string;
@@ -21,7 +20,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const signInState = signInModalState();
 
   const { data: currentUser } = useCurrentUser();
-  const { mutate: mutateSinglePost } = useSinglePost(postId as string);
+  // const { mutate: mutateSinglePost } = useSinglePost();
   const { mutate: mutatePosts } = useAllPost();
 
   const [body, setBody] = useState("");
@@ -44,7 +43,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
         });
         toast.success("Comment Added!");
         setBody("");
-        mutateSinglePost();
+        // mutateSinglePost();
       }
     } catch (error) {
       toast.error("Something Went Wrong!");
@@ -58,7 +57,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
     isComment,
     setisLoading,
     mutatePosts,
-    mutateSinglePost,
+    // mutateSinglePost,
   ]);
 
   return (

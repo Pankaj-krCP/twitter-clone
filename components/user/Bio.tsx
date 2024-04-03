@@ -14,7 +14,7 @@ interface BioProps {
 }
 
 const Bio: React.FC<BioProps> = ({ userId }) => {
-  const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser, mutate: mutateFetchedUser } = useUser(userId);
 
   const editModal = editModalState();
@@ -41,19 +41,12 @@ const Bio: React.FC<BioProps> = ({ userId }) => {
         } else {
           toast.success("Followers Added!");
         }
-        mutateCurrentUser();
         mutateFetchedUser();
       }
     } catch (error) {
       toast.error("Something Went Wrong!");
     }
-  }, [
-    signInModal,
-    currentUser,
-    fetchedUser,
-    mutateCurrentUser,
-    mutateFetchedUser,
-  ]);
+  }, [signInModal, currentUser, fetchedUser, mutateFetchedUser]);
 
   return (
     <div className="border-b-[1px] border-neutral-800 pb-4">

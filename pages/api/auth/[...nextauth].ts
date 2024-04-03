@@ -47,6 +47,20 @@ export const authOptions: AuthOptions = {
     }),
   ],
   debug: process.env.NODE_ENV === "development",
+  callbacks: {
+    jwt: async ({ user, token }: any) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
+    },
+    session: ({ session, token }: any) => {
+      if (session.user) {
+        session.user.id = token.uid;
+      }
+      return session;
+    },
+  },
   session: {
     strategy: "jwt",
   },

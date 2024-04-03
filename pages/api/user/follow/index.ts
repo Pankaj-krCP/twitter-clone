@@ -15,6 +15,7 @@ export default async function handler(
     if (currentUser?.id !== followerId) {
       throw new Error("Not Authinticated");
     }
+
     const users = await followUser(followerId, followingId);
     return res.status(200).json(users);
   } catch (error) {
