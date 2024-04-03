@@ -56,25 +56,22 @@ const Feed: React.FC<FeedProps> = ({
   const handleLike = useCallback(async () => {
     try {
       if (!commentId) {
-        await axios.patch("/api/post/like", { postId, userId: fetchedUser.id });
+        await axios.patch("/api/post/like", { postId, userId: currentUser.id });
         if (likeCount) {
           if (alreadyLiked) {
             setLikeCount(likeCount - 1);
-            toast.success("Like Removed!");
           } else {
             setLikeCount(likeCount + 1);
-            toast.success("Like Added!");
           }
         } else {
           setLikeCount(1);
-          toast.success("Like Added!");
         }
         setAlreadyLiked(!alreadyLiked);
       }
     } catch (error) {
       toast.error("Something Went Wrong!");
     }
-  }, [commentId, fetchedUser, postId, likeCount, alreadyLiked]);
+  }, [commentId, currentUser.id, postId, likeCount, alreadyLiked]);
 
   const openFeed = () => {
     router.push(`/post/${postId}`);
@@ -88,10 +85,10 @@ const Feed: React.FC<FeedProps> = ({
   }, [createdAt]);
 
   useMemo(() => {
-    if (likeIds?.includes(fetchedUser?.id)) {
+    if (likeIds?.includes(currentUser.id)) {
       setAlreadyLiked(true);
     }
-  }, [likeIds, fetchedUser]);
+  }, [likeIds, currentUser.id]);
 
   return (
     <div
