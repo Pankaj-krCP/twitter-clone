@@ -21,10 +21,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   }, [router, href]);
   return (
     <div onClick={handleClick} className="flex flex-row items-center">
-      <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer">
-        <Icon color="white"></Icon>
+      <div className="relative rounded-full h12 w-12 lg:h-14 lg:w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer">
+        <Icon color="white" size={20}></Icon>
       </div>
-      <div className="text-white hidden sm:block">{label}</div>
+      <div className="text-white hidden lg:block">{label}</div>
     </div>
   );
 };

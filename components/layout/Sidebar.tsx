@@ -31,26 +31,33 @@ const Sidebar = () => {
   ];
   return (
     <div className="col-span-1 h-full px-2 sm:pr-6">
-      <div className="flex flex-col place-items-center sm:place-items-end">
-        <div className="space-y-2 lg:w-[230px]s">
-          <SidebarLogo />
-          {items.map((item) => (
-            <SidebarItem
-              key={item.href}
-              href={item.href}
-              label={item.label}
-              icon={item.icon}
-            />
+      <div className="flex flex-col lg:place-items-end">
+        <div className="flex items-center justify-around lg:block space-y-2 lg:w-[230px]s">
+          <div className="hidden lg:block">
+            <SidebarLogo />
+          </div>
+          {items.map((item, index) => (
+            <div key={index} className="inline-block lg:block">
+              <SidebarItem
+                href={item.href}
+                label={item.label}
+                icon={item.icon}
+              />
+            </div>
           ))}
           {currentUser && (
-            <SidebarLogout
-              onClick={() => {
-                signOut();
-              }}
-              icon={BiLogOut}
-            />
+            <div className="inline-block lg:block">
+              <SidebarLogout
+                onClick={() => {
+                  signOut();
+                }}
+                icon={BiLogOut}
+              />
+            </div>
           )}
-          <SidebarTweetButton />
+          <div className="inline-block lg:block pb-5">
+            <SidebarTweetButton />
+          </div>
         </div>
       </div>
     </div>

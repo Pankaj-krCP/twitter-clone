@@ -56,7 +56,10 @@ const Feed: React.FC<FeedProps> = ({
   const handleLike = useCallback(async () => {
     try {
       if (!commentId) {
-        await axios.patch("/api/post/like", { postId, userId: currentUser.id });
+        await axios.patch("/api/post/like", {
+          postId,
+          userId: currentUser?.id,
+        });
         if (likeCount) {
           if (alreadyLiked) {
             setLikeCount(likeCount - 1);
@@ -71,7 +74,7 @@ const Feed: React.FC<FeedProps> = ({
     } catch (error) {
       toast.error("Something Went Wrong!");
     }
-  }, [commentId, currentUser.id, postId, likeCount, alreadyLiked]);
+  }, [commentId, currentUser?.id, postId, likeCount, alreadyLiked]);
 
   const openFeed = () => {
     router.push(`/post/${postId}`);
@@ -85,10 +88,10 @@ const Feed: React.FC<FeedProps> = ({
   }, [createdAt]);
 
   useMemo(() => {
-    if (likeIds?.includes(currentUser.id)) {
+    if (likeIds?.includes(currentUser?.id)) {
       setAlreadyLiked(true);
     }
-  }, [likeIds, currentUser.id]);
+  }, [likeIds, currentUser?.id]);
 
   return (
     <div
@@ -103,13 +106,19 @@ const Feed: React.FC<FeedProps> = ({
         <div className="flex flex-col w-full">
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
-              <p className="text-white">{fetchedUser?.name}</p>
-              <p className="text-neutral-500">@{fetchedUser?.username}</p>
+              <p className="text-white">
+                {fetchedUser?.name?.slice(0, 10)}
+                {fetchedUser?.name?.length > 10 && "..."}
+              </p>
+              <p className="text-neutral-500">
+                @{fetchedUser?.username?.slice(0, 7)}
+                {fetchedUser?.username?.length > 7 && "..."}
+              </p>
               <p className="text-neutral-500">• {time}</p>
             </div>
 
             {currentUser?.id === userId && (
-              <div className="flex relative mr-5">
+              <div className="flex relative mr-3">
                 <div
                   className="cursor-pointer"
                   onClick={() => {
@@ -145,7 +154,11 @@ const Feed: React.FC<FeedProps> = ({
           >
             <p>{body}</p>
           </div>
-          <div className={`${commentId && "hidden"} flex items-center gap-40`}>
+          <div
+            className={`${
+              commentId && "hidden"
+            } flex items-center justify-between`}
+          >
             <div className="flex items-center gap-2">
               <AiOutlineMessage
                 onClick={openFeed}
