@@ -118,17 +118,17 @@ const Feed: React.FC<FeedProps> = ({
             </div>
 
             {currentUser?.id === userId && (
-              <div className="flex relative mr-3">
+              <div className="flex relative">
                 <div
                   className="cursor-pointer"
                   onClick={() => {
                     setOpenOption(!openOption);
                   }}
                 >
-                  <SlOptionsVertical color="white" size={12} />
+                  <SlOptionsVertical color="white" size={14} />
                 </div>
                 {openOption && (
-                  <div className="absolute rounded-md right-5 -top-1 bg-neutral-800 ">
+                  <div className="absolute rounded-md right-8 -top-1 bg-neutral-800 ">
                     <ul>
                       {/* <li className="text-white cursor-pointer border-b-[1px] p-2 px-4 hover:bg-neutral-600 rounded">
                         Edit
