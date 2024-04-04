@@ -107,8 +107,8 @@ const Feed: React.FC<FeedProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
               <p className="text-white">
-                {fetchedUser?.name?.slice(0, 10)}
-                {fetchedUser?.name?.length > 10 && "..."}
+                {fetchedUser?.name?.slice(0, 8)}
+                {fetchedUser?.name?.length > 8 && "..."}
               </p>
               <p className="text-neutral-500">
                 @{fetchedUser?.username?.slice(0, 7)}
