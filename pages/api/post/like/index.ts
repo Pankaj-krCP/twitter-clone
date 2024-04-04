@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import serverAuth from "@/libs/serverAuth";
-import AddLike from "@/db/postController/AddLike";
+import addLike from "@/db/postController/addLike";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +15,7 @@ export default async function handler(
     if (!currentUser) {
       throw new Error("Not Authinticated");
     }
-    const post = await AddLike(postId as string, userId as string);
+    const post = await addLike(postId as string, userId as string);
     return res.status(200).json(post);
   } catch (error) {
     return res.status(500).end();

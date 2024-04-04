@@ -4,7 +4,7 @@ import Header from "../common/Header";
 const HomeHeader = () => {
   return (
     <>
-      <Header showBackArrow={true} label={"Home"} />
+      <Header showBackArrow={false} label={"Home"} />
     </>
   );
 };

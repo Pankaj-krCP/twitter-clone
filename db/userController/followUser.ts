@@ -10,6 +10,7 @@ const followUser = async (followerId: string, followingId: string) => {
     },
   });
 
+  //---------------Unfollow-------------------------------
   if (alreadyFollowed?.followingIds.includes(followingId)) {
     const follower = await prisma.user.update({
       where: {
@@ -48,6 +49,7 @@ const followUser = async (followerId: string, followingId: string) => {
 
     return { follower, following };
   }
+  //----------------------unfollow-----------------------------
 
   const follower = await prisma.user.update({
     where: {
@@ -70,6 +72,28 @@ const followUser = async (followerId: string, followingId: string) => {
       },
     },
   });
+
+  //------------------NOTIFICATION------------
+  try {
+    await prisma.notification.create({
+      data: {
+        body: `${followerId} started followed you!`,
+        userId: followingId,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: followingId,
+      },
+      data: {
+        hasNotification: true,
+      },
+    });
+  } catch (error) {
+    throw new Error(error as any);
+  }
+  //----------------NOTIFICATION-----------------
 
   return { follower, following };
 };

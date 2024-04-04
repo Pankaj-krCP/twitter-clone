@@ -14,6 +14,7 @@ export default async function singleUser(userId: string) {
       followingIds: true,
       followersIds: true,
       posts: true,
+      hasNotification: true,
     },
     where: {
       id: userId,

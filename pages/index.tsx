@@ -7,7 +7,9 @@ export default function Home() {
     <>
       <HomeHeader />
       <PostCreate />
-      <HomePostFeed />
+      <div className="pb-24">
+        <HomePostFeed />
+      </div>
     </>
   );
 }

@@ -1,8 +1,13 @@
+import Header from "@/components/common/Header";
+import Notification from "@/components/notifications/Notification";
 import React from "react";
 
 const index = () => {
   return (
-    <div className="text-white items-center p-40">Page Is Under Progress</div>
+    <>
+      <Header showBackArrow={true} label={"Notifications"} />
+      <Notification />
+    </>
   );
 };
 

@@ -10,7 +10,6 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const user = session.user;
   const data = user ? JSON.parse(JSON.stringify(user)) : null;
-  console.log(data);
   return { currentUser: data };
 };
 

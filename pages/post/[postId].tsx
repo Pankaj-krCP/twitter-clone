@@ -5,9 +5,11 @@ import MainPost from "@/components/post/MainPost";
 const SinglePost = () => {
   return (
     <>
-      <Header label={"Go Back"} showBackArrow={true} />
+      <Header label={"Post"} showBackArrow={true} />
       <MainPost />
-      <Comment />
+      <div className="pb-28">
+        <Comment />
+      </div>
     </>
   );
 };

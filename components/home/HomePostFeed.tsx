@@ -8,15 +8,16 @@ const HomePostFeed = () => {
     <>
       {allPost?.map((item: any, index: number) => {
         return (
-          <Feed
-            key={index}
-            userId={item?.userId}
-            postId={item?.id}
-            createdAt={item?.createdAt}
-            body={item?.body}
-            commentLength={item?.comments?.length}
-            likeIds={item?.likeIds}
-          />
+          <div key={index}>
+            <Feed
+              userId={item?.userId}
+              postId={item?.id}
+              createdAt={item?.createdAt}
+              body={item?.body}
+              commentLength={item?.comments?.length}
+              likeIds={item?.likeIds}
+            />
+          </div>
         );
       })}
     </>

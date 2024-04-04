@@ -8,10 +8,11 @@ import SidebarItem from "./SidebarItem";
 import SidebarLogout from "./SidebarLogout";
 import SidebarTweetButton from "./SidebarTweetButton";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useUser from "@/hooks/useUser";
 
 const Sidebar = () => {
   const { data: currentUser } = useCurrentUser();
-
+  const { data: thisUser } = useUser(currentUser?.id);
   const items = [
     {
       label: "Home",
@@ -22,6 +23,7 @@ const Sidebar = () => {
       label: "Notification",
       href: "/notifications",
       icon: BsBellFill,
+      alert: thisUser?.hasNotification,
     },
     {
       label: "Profile",
@@ -42,6 +44,7 @@ const Sidebar = () => {
                 href={item.href}
                 label={item.label}
                 icon={item.icon}
+                alert={item?.alert}
               />
             </div>
           ))}

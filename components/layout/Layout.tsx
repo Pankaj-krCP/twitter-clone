@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const router = useRouter();
-  const isHome = Object.keys(router.query).length === 0;
+  const isHome = router?.pathname === "/";
   return (
     <div className="h-screen bg-black">
       <div className="container h-full mx-auto xl:px-30 max-w-6xl">
