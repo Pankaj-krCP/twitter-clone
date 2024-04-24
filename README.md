@@ -1,3 +1,6 @@
+![image](https://github.com/Pankaj-krCP/twitter-clone/assets/81906340/fc6a11df-b1f2-4288-ac3a-4c81af732b41)
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
